@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"io"
 	"log"
 	"net/http"
 )
@@ -39,9 +40,11 @@ func resourceServer2Read(d *schema.ResourceData, m interface{}) error {
 
 	defer resp.Body.Close()
 
-	log.Fatal(resp.Body)
+	//	body, err := io.ReadAll(resp.Body)
 
-	d.Set("country", resp.Body)
+	log.Print(resp.Body)
+
+	// d.Set("country", body)
 
 	return nil
 }
