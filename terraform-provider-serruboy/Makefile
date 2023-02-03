@@ -2,6 +2,9 @@
 all: init build install
 
 init:
+		rm go.mod -f
+		rm go.sum -f
+		rm terraform-provider-serruboy -f
 		go get -v
 		go mod init terraform-provider-serruboy
 		go fmt

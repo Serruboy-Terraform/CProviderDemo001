@@ -1,10 +1,13 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceServer2() *schema.Resource {
@@ -32,19 +35,36 @@ func resourceServer2Create(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceServer2Read(d *schema.ResourceData, m interface{}) error {
-	resp, err := http.Get("https://fakerapi.it/api/v1/persons?_locale=" + d.Id())
 
+	req, err := http.NewRequest(http.MethodGet, "https://fakerapi.it/api/v1/persons?_locale="+d.Id(), nil)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("client: could not create request: %s\n", err)
 	}
 
-	defer resp.Body.Close()
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Printf("client: error making http request: %s\n", err)
+	}
 
-	//	body, err := io.ReadAll(resp.Body)
+	fmt.Printf("client: got response!\n")
+	fmt.Printf("client: status code: %d\n", res.StatusCode)
 
-	log.Print(resp.Body)
+	resBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		fmt.Printf("client: could not read response body: %s\n", err)
+	}
 
-	// d.Set("country", body)
+	bodyString := string(resBody)
+
+	jsondata, err := json.Marshal(bodyString)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Print(jsondata)
+
+	d.SetId(bodyString)
 
 	return nil
 }
