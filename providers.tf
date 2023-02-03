@@ -1,12 +1,8 @@
 terraform {
   required_providers {
-    myfile = {
-      version = "=0.1.0"
-      source = "myorg.com/custom/serruboy"
+    example = {
+      version = "~> 1.0.0"
+      source  = "terraform-example.com/exampleprovider/serruboy"
     }
   }
-}
-
-provider "myfile" {
-  encoding = "utf8"
 }
