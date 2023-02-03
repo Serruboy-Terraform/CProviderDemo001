@@ -36,7 +36,16 @@ func resourceServer2Create(d *schema.ResourceData, m interface{}) error {
 
 func resourceServer2Read(d *schema.ResourceData, m interface{}) error {
 
-	req, err := http.NewRequest(http.MethodGet, "https://fakerapi.it/api/v1/persons?_locale="+d.Id(), nil)
+	 myip := d.Get("country").(string)
+	 url := ""
+
+	if myip == "ipv4"{
+		url = "https://api.ipify.org/?format=json"
+	} else {
+		url = "https://api64.ipify.org/?format=json"
+	}
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		fmt.Printf("client: could not create request: %s\n", err)
 	}
