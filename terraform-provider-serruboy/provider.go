@@ -7,8 +7,10 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
-			"example_server":   resourceServer(),
-			"example_server_2": resourceServer2(),
+			"public_ip": public_ip(),
+		},
+		DataSourcesMap: map[string]*schema.Resource{
+			"public_data": dataSource(),
 		},
 	}
 }

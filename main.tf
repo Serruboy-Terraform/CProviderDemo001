@@ -1,11 +1,23 @@
-resource "example_server" "name" {
-  uuid_count="1"
+resource "public_ip" "serru"{
+  iptype="v4"
 }
 
-resource "example_server_2" "name" {
-  country="ES"
+
+data "public_data" "name" {}
+
+data "public_data" "external_ip_from_aws" {
+  resolver = "https://checkip.amazonaws.com/"
 }
 
-output "example_server_2" {
-  value = example_server_2.name.country
+output "external_ips" {
+  value = data.public_data.name.result
 }
+
+output "external_ip_from_awss" {
+  value = data.public_data.external_ip_from_aws
+}
+
+output "sssss"{
+  value = public_ip.serru.result
+}
+
