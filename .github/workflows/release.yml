@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app
+        working-directory: ./terraform-provider-serruboy
     steps:
       -
         name: Checkout
@@ -30,9 +30,6 @@ jobs:
         name: Unshallow
         run: git fetch --prune --unshallow
 
-      -
-        name: Setup Symfony
-        working-directory: ./terraform-provider-serruboy
       -
         name: Set up Go
         uses: actions/setup-go@6edd4406fa81c3da01a34fa6f6343087c207a568 # v3.5.0
